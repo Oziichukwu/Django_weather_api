@@ -22,9 +22,12 @@ def authenticatedwetheruser(request):
     key = '9489e1da28ff4283927154211221907'
     data = request.user
     location = data.location
-    weather_request = requests.get("https://api.weatherapi.com/v1/current.json?key="+key+"&q="+location)
-    data = json.loads(weather_request.content)
-    return Response(data)
+    try:
+        weather_request = requests.get("https://api.weatherapi.com/v1/current.json?key="+key+"&q="+location)
+        data = json.loads(weather_request.content)
+        return Response(data)
+    except ObjectDoesNotExist:
+        pass    
 
 
 @api_view(('POST',))
@@ -69,16 +72,19 @@ def unauthenticatedwetheruser_with_days(request):
     location = request.data['location']
     days = request.data['days']
     number_of_days_allowed = 10
-    if days <= number_of_days_allowed:
-        URL = 'https://api.weatherapi.com/v1/forecast.json'
-        PARAMS = {'key': key ,'q' : location, 'days': days}
-        weather_request = requests.get(url = URL,params=PARAMS)
-        data = json.loads(weather_request.content)
-        return Response(data, status = status.HTTP_200_OK)
-    else:
-        notfound = 'Kindly Enter a value less than or equal to 10'
-        return Response(notfound, status = status.HTTP_404_NOT_FOUND) 
+    try:
+        if days <= number_of_days_allowed:
+            URL = 'https://api.weatherapi.com/v1/forecast.json'
+            PARAMS = {'key': key ,'q' : location, 'days': days}
+            weather_request = requests.get(url = URL,params=PARAMS)
+            data = json.loads(weather_request.content)
+            return Response(data, status = status.HTTP_200_OK)
+        else:
+            notfound = 'Kindly Enter a value less than or equal to 10'
+            return Response(notfound, status = status.HTTP_404_NOT_FOUND) 
         
+    except ObjectDoesNotExist:
+        pass
 
 
      
