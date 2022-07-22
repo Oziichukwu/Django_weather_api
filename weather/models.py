@@ -18,6 +18,6 @@ class WeatherUser(AbstractUser):
     # objects = MyAccountManager()
 
     def __str__(self):
-        return self.location + '' + self.days
+        return self.location
 
 
