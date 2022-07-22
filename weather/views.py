@@ -9,7 +9,7 @@ from rest_framework import status
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
 from django.views.decorators.csrf import csrf_exempt
-
+from django.core.exceptions import ObjectDoesNotExist
 # Create your views here.
 
 class MyTokenObtainPairView(TokenObtainPairView):
@@ -32,7 +32,7 @@ def authenticatedwetheruser(request):
 def unauthenticatedwetheruser(request):
     key = '9489e1da28ff4283927154211221907'
     location = request.data['location']
-    if location is not None:
+    try:
         URL = 'https://api.weatherapi.com/v1/current.json'
         PARAMS = {'key': key ,'q' : location}
         weather_request = requests.get(url = URL,params=PARAMS)
@@ -40,10 +40,9 @@ def unauthenticatedwetheruser(request):
         data = json.loads(weather_request.content)
         return Response(data, status = status.HTTP_200_OK)    
 
-    else: 
-        notfound = 'Kindly enter a valid location'
-        return Response(notfound, status = status.HTTP_400_BAD_REQUEST) 
-
+    except ObjectDoesNotExist:
+        pass
+        
 
 @api_view(('GET','POST'))
 @permission_classes([IsAuthenticated])
