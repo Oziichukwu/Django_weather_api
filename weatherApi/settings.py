@@ -91,11 +91,11 @@ DATABASES = {
         # 'ENGINE': 'django.db.backends.sqlite3',
         # 'NAME': BASE_DIR / 'db.sqlite3',
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'weatherinfo',
-        'USER': 'goodnews',
-        'PASSWORD': 'password',
+        'NAME': env('DATABASE_NAME'),
+        'USER': env('DATABASE_USER'),
+        'PASSWORD': env('DATABASE_PASS'),
         'HOST': 'localhost',
-        'PORT': '5432',
+        'PORT': env('DATABASE_PORT'),
 
     }
 }
