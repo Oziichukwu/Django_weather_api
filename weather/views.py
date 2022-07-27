@@ -8,9 +8,9 @@ from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
-from django.views.decorators.csrf import csrf_exempt
+# from django.views.decorators.csrf import csrf_exempt
 from django.core.exceptions import ObjectDoesNotExist
-
+from weatherApi import settings
 # Create your views here.
 
 class MyTokenObtainPairView(TokenObtainPairView):
@@ -20,7 +20,7 @@ class MyTokenObtainPairView(TokenObtainPairView):
 @api_view(('GET',))
 @permission_classes([IsAuthenticated])
 def authenticatedwetheruser(request):
-    key = '9489e1da28ff4283927154211221907'
+    key = settings.key
     data = request.user
     location = data.location
     try:
@@ -32,9 +32,9 @@ def authenticatedwetheruser(request):
 
 
 @api_view(('POST',))
-@csrf_exempt
+# @csrf_exempt
 def unauthenticatedwetheruser(request):
-    key = '9489e1da28ff4283927154211221907'
+    key = settings.key
     location = request.data['location']
     try:
         URL = 'https://api.weatherapi.com/v1/current.json'
@@ -50,7 +50,7 @@ def unauthenticatedwetheruser(request):
 @api_view(('GET','POST'))
 @permission_classes([IsAuthenticated])
 def authenticatedwetheruser_with_days(request):
-    key = '9489e1da28ff4283927154211221907'
+    key = settings.key
     data = request.user
     location = data.location
     days = request.data['days']
@@ -66,9 +66,9 @@ def authenticatedwetheruser_with_days(request):
     
 
 @api_view(('POST',))
-@csrf_exempt
+# @csrf_exempt
 def unauthenticatedwetheruser_with_days(request):
-    key = '9489e1da28ff4283927154211221907'
+    key = settings.key
     location = request.data['location']
     days = request.data['days']
     number_of_days_allowed = 10
