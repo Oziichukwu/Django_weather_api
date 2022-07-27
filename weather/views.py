@@ -10,12 +10,13 @@ from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
 from django.views.decorators.csrf import csrf_exempt
 from django.core.exceptions import ObjectDoesNotExist
+
 # Create your views here.
 
 class MyTokenObtainPairView(TokenObtainPairView):
     serializer_class = MyTokenObtainPairSerializer
 
-
+        
 @api_view(('GET',))
 @permission_classes([IsAuthenticated])
 def authenticatedwetheruser(request):
@@ -42,7 +43,6 @@ def unauthenticatedwetheruser(request):
         # weather_request = requests.get("https://api.weatherapi.com/v1/current.json?key="+key+"&q="+location)
         data = json.loads(weather_request.content)
         return Response(data, status = status.HTTP_200_OK)    
-
     except ObjectDoesNotExist:
         pass
         
@@ -82,7 +82,6 @@ def unauthenticatedwetheruser_with_days(request):
         else:
             notfound = 'Kindly Enter a value less than or equal to 10'
             return Response(notfound, status = status.HTTP_404_NOT_FOUND) 
-        
     except ObjectDoesNotExist:
         pass
 

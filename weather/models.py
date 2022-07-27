@@ -15,8 +15,6 @@ class WeatherUser(AbstractUser):
     USERNAME_FIELD = 'username'
     REQUIRED_FIELDS = []
 
-    # objects = MyAccountManager()
-
     def __str__(self):
         return self.location
 

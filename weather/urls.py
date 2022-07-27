@@ -27,5 +27,4 @@ urlpatterns = [
     path('api/authuser/weatherd/',views.authenticatedwetheruser_with_days, name='weather_auth_days'),
     path('api/unauthuser/weatherd/',views.unauthenticatedwetheruser_with_days, name='weather_unauth_days'),
   
-
 ]
