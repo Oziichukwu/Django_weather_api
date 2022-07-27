@@ -152,8 +152,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 EMAIL_HOST ='smpt.gmail.com'
 EMAIL_PORT = 587
-EMAIL_HOST_USER = 'oziichukwu1@gmail.com'
-EMAIL_HOST_PASSWORD='123Ugc@@@'
+EMAIL_HOST_USER = env('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD=env('EMAIL_HOST_PASSWORD')
 EMAIL_USE_TLS =True
 
 REST_REGISTRATION = {
